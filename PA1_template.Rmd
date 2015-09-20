@@ -18,26 +18,26 @@ library(ggplot2)
 
 *1.Load data*
 
-```{r loadData}
+```{r echo = TRUE}
 df <- read.csv("activity.csv")
 ```
 *2.Transform the data into data table*
 
-```{r TransformData}
+```{r echo = TRUE}
 df.DT = data.table(df)
 ```
 
 ## What is mean total number of steps taken per day?
 
 *1.Calculate the total number of steps taken per day - ignore missing values*
-```{r TotalSteps}
+```{r echo = TRUE}
 require(plyr)
 df_clean <- na.omit(df)
 dfSteps<-ddply(df_clean,.(date) ,summarise, steps = sum(steps) )
 ```
 
 *2.Make a histogram of the total number of steps taken each day*
-```{r }
+```{r echo = TRUE}
 hist(dfSteps$steps , breaks = 20, main="Total Steps Per Day", xlab="Total steps" ,ylab="Frequency", col="blue")
 ```
 
@@ -45,14 +45,14 @@ hist(dfSteps$steps , breaks = 20, main="Total Steps Per Day", xlab="Total steps"
 
 Mean
 
-```{r Mean}
+```{r echo = TRUE}
 MissingStepsMean <- mean(dfSteps$steps)
 MissingStepsMean
 ```
 
 Median
 
-```{r Median}
+```{r echo = TRUE}
 MissingStepsMedian <- median(dfSteps$steps)
 MissingStepsMedian
 ```
@@ -61,14 +61,14 @@ MissingStepsMedian
 
 *1.Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)*
 
-```{r }
+```{r echo = TRUE}
 steps_interval <- aggregate(steps ~ interval , df_clean , mean)
 plot (steps_interval , type = "l" , xlab = "Interval" , ylab = "Steps Avg" , col = "blue")
 ```
 
 *2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
 
-```{r }
+```{r echo = TRUE}
 max_steps_rowid <- which.max(steps_interval$steps)
 steps_interval[max_steps_rowid,]
 ```
@@ -77,7 +77,7 @@ steps_interval[max_steps_rowid,]
 
 *1.Calculate and report the total number of missing values in the dataset*
 
-```{r }
+```{r echo = TRUE}
 df_NA <- subset(df , is.na(df$steps))
 nrow(df_NA)
 ```
@@ -88,7 +88,7 @@ nrow(df_NA)
 
 
 *3.Create a new dataset that is equal to the original dataset but with the missing data filled in.*
-```{r }
+```{r echo = TRUE}
 for (i in 1:nrow(df)){
   if (is.na(df$steps[i])){
     intervalVal <- df$interval[i]
@@ -101,18 +101,18 @@ for (i in 1:nrow(df)){
 
 *4.Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?*
 
-```{r }
+```{r echo = TRUE}
 dfStepsFilled<-ddply(df,.(date) ,summarise, steps = sum(steps) )
 hist(dfStepsFilled$steps , breaks=30,main="Total Steps Per Day", xlab="Total steps" ,ylab="Frequency", col="blue")
 ```
 *Mean of total number os steps*
-```{r }
+```{r echo = TRUE}
 FilledstepsMean <- mean(dfStepsFilled$steps)
 FilledstepsMean
 ```
 
 *Median of total number os steps*
-```{r }
+```{r echo = TRUE}
 FilledstepsMedian <- median(dfStepsFilled$steps)
 FilledstepsMedian
 ```
@@ -124,7 +124,7 @@ The new values are a little bit higher because missing values are considered as 
 
 *1.Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.*
 
-```{r }
+```{r echo = TRUE}
 week <- factor(weekdays(as.Date(df$date)) %in% c("Saturday","Sunday"), 
                labels=c("Weekday","Weekend"), ordered=FALSE)
 
@@ -133,7 +133,7 @@ dfWeekDayEnd <- aggregate(df$steps, by=list(interval=df$interval, weekday=week),
 
 *2.Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).*
 
-```{r }
+```{r echo = TRUE}
 g <- ggplot(dfWeekDayEnd, aes(interval, x) )
 
 g + geom_line() + facet_grid(weekday ~ .) + 

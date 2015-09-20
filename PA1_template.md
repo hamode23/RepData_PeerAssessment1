@@ -40,7 +40,7 @@ dfSteps<-ddply(df_clean,.(date) ,summarise, steps = sum(steps) )
 hist(dfSteps$steps , breaks = 20, main="Total Steps Per Day", xlab="Total steps" ,ylab="Frequency", col="blue")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 *3.Calculate and report the mean and median of the total number of steps taken per day*
 
@@ -78,7 +78,7 @@ steps_interval <- aggregate(steps ~ interval , df_clean , mean)
 plot (steps_interval , type = "l" , xlab = "Interval" , ylab = "Steps Avg" , col = "blue")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
 
 *2.Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
 
@@ -133,7 +133,7 @@ dfStepsFilled<-ddply(df,.(date) ,summarise, steps = sum(steps) )
 hist(dfStepsFilled$steps , breaks=30,main="Total Steps Per Day", xlab="Total steps" ,ylab="Frequency", col="blue")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-12-1.png) 
 *Mean of total number os steps*
 
 ```r
@@ -183,4 +183,4 @@ g + geom_line() + facet_grid(weekday ~ .) +
      labs(title="Daily activity pattern")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-16-1.png) 
